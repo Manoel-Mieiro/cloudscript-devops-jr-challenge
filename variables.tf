@@ -48,3 +48,48 @@ variable "vpc_role_arn" {
   type      = string
   sensitive = true
 }
+
+variable "eks_name" {
+  type = string
+}
+
+variable "eks_k8s_version" {
+  type = string
+}
+
+variable "eks_endpoint_public_access" {
+  type    = bool
+  default = false
+}
+
+variable "eks_creator_admin_permissions" {
+  description = "Adds the current caller identity as an administrator via cluster access entry"
+  type        = bool
+  default     = false
+}
+
+
+variable "eks_node_ami_type" {
+  type    = string
+  default = "AL2_ARM_64"
+}
+
+variable "eks_node_instance_type" {
+  type    = list(string)
+  default = ["t4g.small"]
+}
+
+variable "eks_node_min_size" {
+  type    = number
+  default = 0
+}
+
+variable "eks_node_max_size" {
+  type    = number
+  default = 2
+}
+
+variable "eks_node_desired_size" {
+  type    = number
+  default = 1
+}
