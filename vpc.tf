@@ -1,8 +1,9 @@
 module "vpc" {
-  source                     = "terraform-aws-modules/vpc/aws"
+  source = "terraform-aws-modules/vpc/aws"
   providers = {
     aws = aws.EksNetworkProvisioningRole
   }
+  version                    = "6.6.0"
   name                       = var.vpc_name
   cidr                       = var.vpc_cidr
   azs                        = var.vpc_azs
