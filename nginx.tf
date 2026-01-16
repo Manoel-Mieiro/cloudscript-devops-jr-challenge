@@ -1,4 +1,4 @@
-resource "kubernetes_ingress" "ingress_nginx" {
+resource "kubernetes_ingress_v1" "ingress_nginx" {
   wait_for_load_balancer = true
   metadata {
     name = var.k8s_ingress_name
