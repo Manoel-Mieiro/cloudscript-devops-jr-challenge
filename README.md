@@ -3,6 +3,7 @@
 Trata-se de um projeto de IaC para implantação de EKS e VPC funcionais. Os detalhes do projeto podem ser conferidos em [challenge.md](./challenge.md).
 
 ## Visão geral da solução
+O presente projeto busca implementar um Elastic Kubernetes Service (EKS) em uma dada rede Virtual Private Cloud (VPC), ambos fazendo uso de infraestrutura como código (IaC), Terraform. Para tal, foi adotada uma abordagem em módulos em que é feito o consumo somente do necessário. Também foram avaliadas questões de custo para região e size das `EC2` que compôem os node groups do EKS. Também foi necessário configurar um usuário associado a _roles_ e _policies_ IAM, de forma a não usar o perfil _root_ e estar em conformidade com a política de acesso estritamente necessário apenas.
 
 ## Explicação da arquitetura
 
