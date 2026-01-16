@@ -52,7 +52,31 @@ Esse arquivo pode ser tranformado em texto (`.txt`) para leitura posterior utili
 terraform show -no-color plan.tfplan
 ```
 
-Agora sobre as dependências, temos que o módulo `EKS` precisa da resolução de valores oriundos da `VPC`, então deve-se provisioná-lo após a criação desse recurso. Por estarmos usando módulos não há diretiva `depends_on`, o que é um problema. Nesse cenário, pode-se executar o `plan` ou `apply` utilizando o argumento `target` ou fazer o `enforce` com os valores de `output` do módulo `VPC`.
+Agora sobre as dependências, temos que o módulo `EKS` precisa da resolução de valores oriundos da `VPC`, então deve-se provisioná-lo após a criação desse recurso. Por estarmos usando módulos não há diretiva `depends_on`, o que é um problema. Nesse cenário, pode-se executar o `plan` ou `apply` utilizando o argumento `target` ou fazer o `enforce` com os valores de `output` do módulo `VPC`. Dessa forma, sem o uso do target, o plan ficaria assim:
+
+```sh
+terraform plan -var-file="values.tfvars" -out="plan.tfplan"
+```
+
+Depois disso, o arquivo `.tfplan` pode ser usado no apply.
+
+### Apply
+Para executar o apply, basta passar ou os valores do `.tfvars` em `var-file` ou um arquivo `.tfplan`. Optei pela segunda opção, chegando ao comando:
+
+```sh
+terraform apply plan.tfplan
+```
+
+### Destroy
+Após uso da infraestrutura, quando não se faz mais necessária, eu rodo o `destroy`, apontando para o arquivo de `.tfvars` como indicado no _snippet_ abaixo:
+
+```sh
+terraform destroy -var-file="values.tfvars"
+```
+
+### Tflint
+Também fiz uso do tflint para verificar algum problema de identação ou boa prática utilizando o comando de mesmo nome `tflint`. Antes dele, usei `terraform fmt` para formatar os arquivos na raiz, que foram os que eu criei. Para casos de `nesting`, pode-se usar a opção `-recurse`.
+
 
 ## Decisões técnicas
 - Uso dos módulos `VPC` e `EKS` para provisão da infraestrutura;
