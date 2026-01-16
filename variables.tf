@@ -75,13 +75,11 @@ variable "eks_creator_admin_permissions" {
 
 
 variable "eks_node_ami_type" {
-  type    = string
-  default = "AL2_ARM_64"
+  type = string
 }
 
 variable "eks_node_instance_type" {
-  type    = list(string)
-  default = ["t4g.small"]
+  type = list(string)
 }
 
 variable "eks_node_min_size" {
@@ -117,3 +115,30 @@ variable "eks_encryption_config" {
   })
   default = null
 }
+
+variable "eks_public_access_cidrs" {
+  description = "	List of CIDR blocks which can access the Amazon EKS public API server endpoint"
+  type        = list(string)
+  default     = null
+}
+
+variable "default_arn" {
+  type = string
+}
+
+variable "nginx_namespace_name" {
+  type = string
+}
+
+variable "helm_nginx_name" {
+  type = string
+}
+
+variable "helm_nginx_chart_name" {
+  type = string
+}
+
+variable "helm_nginx_chart_version" {
+  type = string
+}
+
