@@ -172,6 +172,6 @@ variable "helm_hello_world_namespace" {
 }
 
 variable "helm_hello_world_create_namespace" {
-  type = bool
+  type    = bool
   default = false
 }
