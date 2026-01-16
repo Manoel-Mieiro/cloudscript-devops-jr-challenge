@@ -49,6 +49,11 @@ variable "vpc_role_arn" {
   sensitive = true
 }
 
+variable "eks_role_arn" {
+  type      = string
+  sensitive = true
+}
+
 variable "eks_name" {
   type = string
 }
@@ -92,4 +97,23 @@ variable "eks_node_max_size" {
 variable "eks_node_desired_size" {
   type    = number
   default = 1
+}
+
+variable "eks_create_cloudwatch" {
+  type    = bool
+  default = false
+}
+
+variable "eks_node_capacity_type" {
+  type    = string
+  default = "ON_DEMAND"
+}
+
+variable "eks_encryption_config" {
+  description = "Configuration block with encryption configuration for the cluster"
+  type = object({
+    provider_key_arn = optional(string)
+    resources        = optional(list(string), ["secrets"])
+  })
+  default = null
 }
