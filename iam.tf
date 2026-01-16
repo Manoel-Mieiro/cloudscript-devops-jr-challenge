@@ -1,5 +1,5 @@
 module "iam_lab_user" {
-  source = "terraform-aws-modules/iam/aws//modules/user"
+  source = "terraform-aws-modules/iam/aws//examples/iam-user"
 }
 
 module "iam_role_vpc" {
