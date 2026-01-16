@@ -6,6 +6,22 @@ Trata-se de um projeto de IaC para implantação de EKS e VPC funcionais. Os det
 O presente projeto busca implementar um Elastic Kubernetes Service (EKS) em uma dada rede Virtual Private Cloud (VPC), ambos fazendo uso de infraestrutura como código (IaC), Terraform. Para tal, foi adotada uma abordagem em módulos em que é feito o consumo somente do necessário. Também foram avaliadas questões de custo para região e size das `EC2` que compôem os node groups do EKS. Também foi necessário configurar um usuário associado a _roles_ e _policies_ IAM, de forma a não usar o perfil _root_ e estar em conformidade com a política de acesso estritamente necessário apenas.
 
 ## Explicação da arquitetura
+A arquitetura proposta utiliza serviços gerenciados da Amazon Web Services e é provisionada integralmente via Terraform, seguindo princípios de infraestrutura como código, segurança por padrão e otimização de custos.
+
+A base da solução é uma Virtual Private Cloud (VPC) dedicada, responsável por isolar e segmentar os recursos de rede. Dentro dessa VPC são criadas subnets privadas, nas quais residem os `nodes` do `cluster` Kubernetes, garantindo que as cargas de trabalho não fiquem diretamente expostas à internet.
+
+Sobre essa VPC é implantado um `cluster` Amazon Elastic Kubernetes Service (EKS), responsável pelo plano de controle do Kubernetes. O Control Plane é gerenciado pela AWS (`managed`), reduzindo o esforço operacional e aumentando a confiabilidade da solução. Para fins de operação e simplicidade no desafio, o `endpoint` da API do Kubernetes é configurado como público, permitindo o uso do kubectl a partir da máquina local.
+
+Os `node groups` gerenciados do EKS utilizam instâncias `EC2` com `AMI` `Amazon Linux 2023`, em modo `ON_DEMAND`, equilibrando compatibilidade, custo e previsibilidade. Esses `nodes` são criados exclusivamente em subnets privadas, reforçando o isolamento das aplicações.
+
+O acesso externo às aplicações executadas no `cluster` não depende do endpoint do EKS, mas sim de recursos Kubernetes como Services do tipo LoadBalancer ou Ingress, que, quando configurados, provisionam automaticamente balanceadores de carga gerenciados pela AWS.
+
+O controle de acesso à infraestrutura é realizado via IAM, utilizando roles e policies específicas, evitando o uso do usuário root e aplicando o princípio do menor privilégio.
+
+O diagrama `c4` correspondente à arquitetura da solução pode ser observado na Figura a seguir:
+
+<img src="./media/cloudscript.png"/>
+
 
 ## Execução do Terraform
 Deve-se fazer a instalação do Terraform na máquina e adicioná-lo às variáveis de ambiente `PATH`. Feito isso, pode-se conferir após o _reboot_ que o comando abaixo reconhece o cmdlet `terraform`:
