@@ -1,15 +1,40 @@
-resource "kubernetes_namespace" "ingress_nginx" {
+resource "kubernetes_ingress" "ingress_nginx" {
+  wait_for_load_balancer = true
   metadata {
-    name = var.nginx_namespace_name
+    name = var.k8s_ingress_name
   }
+
+  spec {
+    ingress_class_name = "nginx"
+
+    rule {
+      http {
+        path {
+          backend {
+            service {
+              name = helm_release.hello_world.name
+              port {
+                number = 5678
+              }
+            }
+          }
+
+          path = var.k8s_demo_path
+        }
+      }
+    }
+
+  }
+  depends_on = [helm_release.hello_world]
 }
 
 resource "helm_release" "ingress_nginx" {
-  name       = var.helm_nginx_name
-  chart      = var.helm_nginx_chart_name
-  repository = "https://kubernetes.github.io/ingress-nginx"
-  namespace  = kubernetes_namespace.ingress_nginx.metadata[0].name
-  version    = var.helm_nginx_chart_version
+  name             = var.helm_nginx_name
+  chart            = var.helm_nginx_chart_name
+  repository       = "https://kubernetes.github.io/ingress-nginx"
+  namespace        = kubernetes_namespace.ingress_nginx.metadata[0].name
+  version          = var.helm_nginx_chart_version
+  create_namespace = var.helm_nginx_create_namespace
 
   timeout = 300
 
@@ -19,10 +44,6 @@ resource "helm_release" "ingress_nginx" {
     value = "LoadBalancer"
   }
 
-  set {
-    name  = "controller.service.annotations.service.beta.kubernetes.io/aws-load-balancer-scheme"
-    value = "internet-facing"
-  }
-
-  depends_on = [kubernetes_namespace.ingress_nginx]
 }
+
+
