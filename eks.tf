@@ -7,6 +7,7 @@ module "eks" {
   enable_cluster_creator_admin_permissions = var.eks_creator_admin_permissions
   create_cloudwatch_log_group              = var.eks_create_cloudwatch
   encryption_config                        = var.eks_encryption_config
+  endpoint_public_access_cidrs             = var.eks_public_access_cidrs
   additional_security_group_ids            = [module.vpc.default_security_group_id]
   providers = {
     aws = aws.EksAdmin
