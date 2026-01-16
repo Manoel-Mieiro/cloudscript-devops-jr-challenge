@@ -1,22 +1,25 @@
+module "iam_lab_user" {
+  source = "terraform-aws-modules/iam/aws//modules/user"
+}
+
 module "iam_role_vpc" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role"
   version = "6.3.0"
 
-  name = "VpcProvisionerRole"
+  name = "vpc-administrator"
 }
-
-
 
 module "iam_role_eks" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role"
   version = "6.3.0"
-  name    = "EksProvisionerRole"
+  name    = "eks-administrator"
 }
 
-module "iam_role_k8s" {
+module "iam_role_ec2" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-role"
   version = "6.3.0"
-  name    = "KubernetesIamProvisionerRole"
+  name    = "ec2-administrator"
 }
+
 
 
