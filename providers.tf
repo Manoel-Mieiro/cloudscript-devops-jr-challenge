@@ -53,3 +53,7 @@ provider "helm" {
     config_path = "~/.kube/config"
   }
 }
+
+data "aws_iam_user" "vasya-pupkin" {
+  user_name = "vasya.pupkin"
+}
