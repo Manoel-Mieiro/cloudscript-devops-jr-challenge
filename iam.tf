@@ -37,3 +37,8 @@ resource "aws_iam_user_policy_attachment" "iam" {
   policy_arn = "arn:aws:iam::aws:policy/IAMFullAccess"
 }
 
+resource "aws_iam_user_policy_attachment" "ssm" {
+  user       = data.aws_iam_user.vasya-pupkin.user_name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMFullAccess "
+}
+
