@@ -9,6 +9,7 @@ module "eks" {
   encryption_config                        = var.eks_encryption_config
   endpoint_public_access_cidrs             = var.eks_public_access_cidrs
   additional_security_group_ids            = [module.vpc.default_security_group_id]
+  addons                                   = var.eks_addons
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
