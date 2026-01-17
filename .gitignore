@@ -15,7 +15,6 @@
 
 # CSV (somente na raiz)
 *.csv
-!**/*.csv
 
 # Terraform lock file (DEVE ser versionado)
 !.terraform.lock.hcl
