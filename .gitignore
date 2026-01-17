@@ -1,8 +1,21 @@
-*.tfvars
-*.tfstate
-*.env
+# Terraform
+**/*.tfvars
+**/*.tfstate
+**/*.tfstate.*
+**/*.tfplan
+**/.terraform/
+**/*.backup
+**/*.info
+
+# Environment files
+**/*.env
+
+# HCL files (mantidos versionados)
+!**/*.hcl
+
+# CSV (somente na raiz)
 *.csv
-/.terraform
-*.hcl
-*.backup
-*.tfplan
+!**/*.csv
+
+# Terraform lock file (DEVE ser versionado)
+!.terraform.lock.hcl
