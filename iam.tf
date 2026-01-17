@@ -2,24 +2,38 @@ module "iam_lab_user" {
   source = "terraform-aws-modules/iam/aws//examples/iam-user"
 }
 
-module "iam_role_vpc" {
-  source  = "terraform-aws-modules/iam/aws//modules/iam-role"
-  version = "6.3.0"
-
-  name = "vpc-administrator"
+resource "aws_iam_user_policy_attachment" "vpc" {
+  user       = data.aws_iam_user.vasya-pupkin.user_name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonVPCFullAccess"
 }
 
-module "iam_role_eks" {
-  source  = "terraform-aws-modules/iam/aws//modules/iam-role"
-  version = "6.3.0"
-  name    = "eks-administrator"
+resource "aws_iam_user_policy_attachment" "eks_cluster_policy" {
+  user       = data.aws_iam_user.vasya-pupkin.user_name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
 }
 
-module "iam_role_ec2" {
-  source  = "terraform-aws-modules/iam/aws//modules/iam-role"
-  version = "6.3.0"
-  name    = "ec2-administrator"
+resource "aws_iam_user_policy_attachment" "eks_service_policy" {
+  user       = data.aws_iam_user.vasya-pupkin.user_name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
 }
 
+resource "aws_iam_user_policy_attachment" "eks_worker_node_policy" {
+  user       = data.aws_iam_user.vasya-pupkin.user_name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+}
 
+resource "aws_iam_user_policy_attachment" "eks_cni_policy" {
+  user       = data.aws_iam_user.vasya-pupkin.user_name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+}
+
+resource "aws_iam_user_policy_attachment" "ec2" {
+  user       = data.aws_iam_user.vasya-pupkin.user_name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+}
+
+resource "aws_iam_user_policy_attachment" "iam" {
+  user       = data.aws_iam_user.vasya-pupkin.user_name
+  policy_arn = "arn:aws:iam::aws:policy/IAMFullAccess"
+}
 
