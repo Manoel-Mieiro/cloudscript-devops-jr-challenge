@@ -32,7 +32,4 @@ provider "helm" {
   }
 }
 
-data "aws_iam_user" "vasya-pupkin" {
-  user_name = "vasya.pupkin"
-}
 
