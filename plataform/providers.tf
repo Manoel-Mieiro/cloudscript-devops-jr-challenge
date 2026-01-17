@@ -36,10 +36,3 @@ data "aws_iam_user" "vasya-pupkin" {
   user_name = "vasya.pupkin"
 }
 
-data "terraform_remote_state" "infra" {
-  backend = "local"
-
-  config = {
-    path = "./infra/terraform.tfstate"
-  }
-}
