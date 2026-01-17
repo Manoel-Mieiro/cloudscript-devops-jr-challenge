@@ -121,3 +121,18 @@ variable "eks_public_access_cidrs" {
   type        = list(string)
   default     = null
 }
+
+variable "eks_addons" {
+  type = map(object({
+    before_compute       = optional(bool, false)
+    most_recent          = optional(bool, true)
+    addon_version        = optional(string)
+    configuration_values = optional(string)
+  }))
+
+  default = {
+    vpc-cni    = {}
+    kube-proxy = {}
+    coredns    = {}
+  }
+}
