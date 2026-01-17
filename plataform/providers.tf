@@ -1,0 +1,45 @@
+terraform {
+  required_version = ">= 1.5"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 6.28.0"
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.30"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "~> 2.13"
+    }
+  }
+}
+
+provider "aws" {
+  alias  = "default"
+  region = "us-west-2"
+}
+
+provider "kubernetes" {
+  config_path = "~/.kube/config"
+}
+
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
+}
+
+data "aws_iam_user" "vasya-pupkin" {
+  user_name = "vasya.pupkin"
+}
+
+data "terraform_remote_state" "infra" {
+  backend = "local"
+
+  config = {
+    path = "./infra/terraform.tfstate"
+  }
+}
