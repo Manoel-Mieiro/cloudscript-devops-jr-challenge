@@ -177,11 +177,11 @@ Validação do acesso ao cluster:
 
 ```sh
 kubectl get node
-kubectl get pods -A
+kubectl get namespace
 ```
 
 Comprovação:
-![image](./media/pods.png)
+![image](./media/namespaces.png)
 
 ## Decisões técnicas
 
